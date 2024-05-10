@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Message</title>
+    <title>Update Category</title>
     <!-- SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -12,34 +12,30 @@
 include 'conn.php';
 
 if (isset($_POST['submit'])) {
-
-    $full_name =  $_POST['full_name'];
-    $email =  $_POST['email'];
-    $phone_number = $_POST['phone_number'];
-    $subject =  $_POST['subject'];
-    $message =  $_POST['message'];
-    
-    $sql = "INSERT INTO `message_tbl` (`full_name`, `email`, `phone_number`, `subject`, `message`) VALUES ('$full_name', '$email', '$phone_number', '$subject', '$message')";
+    $id = $_POST['id'];
+    $category = $_POST['category'];
+   
+    $sql = "UPDATE `category_tbl` SET `category`='$category' WHERE `id`='$id'";
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Message submitted successfully.',
+                    text: 'Updated category successfully',
                     icon: 'success',
                     timer: 2000,
                     timerProgressBar: true,
                     showConfirmButton: true,
                     confirmButtonText: 'OK'
                 }).then(function() {
-                    window.location.href = '../index.php';
+                    window.location.href = '../admin/category.php';
                 });
               </script>";
-    } else {
+    } else { 
         echo "<script>
                 Swal.fire({
                     title: 'Error!',
-                    text: 'An error occurred while submitting the message.',
+                    text: 'An error occurred while updating category',
                     icon: 'error',
                     timer: 2000,
                     timerProgressBar: true,

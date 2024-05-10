@@ -1,93 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Pizza Hut</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-        }
+  <title>About Us</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
+  <style>
+     body{
+      font-family:arial;
+      
+    }
+    .social-part .fa{
+    padding-right:20px;
+}
+ul li a{
+    margin-right: 20px;
+}
 
-        .navbar {
-            background-color: #333;
-            overflow: hidden;
-        }
+.about-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-        .navbar ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
+.content {
+    display: flex;
+    align-items: center;
+}
 
-        .navbar ul li {
-            float: left;
-        }
+.text {
+    flex: 1;
+}
 
-        .navbar ul li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
+.text p {
+    font-size: 18px;
+    line-height: 1.5;
+}
 
-        .navbar ul li a:hover {
-            background-color: #ddd;
-            color: black;
-        }
+.image {
+    flex: 1;
+    text-align: right;
+}
 
-        .about-section {
-            height: 100%;
-            background-image: url('img/bdrop1.jpg'); 
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 50px; 
-        }
+.image img {
+    width: 100%;
+    border-radius: 10px;
+}
+/* Reviews Section */
+.reviews {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
 
-       
-        .card {
-            background: rgba(255, 255, 255, 0.7); 
-            border: none;
-        }
-    </style>
+
+
+.card-group {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    width: 300px;
+    margin: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body h3 {
+    margin-top: 0;
+}
+
+
+.card-footer {
+    background-color: #f5f5f5;
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #ddd;
+}
+
+.text-body-secondary {
+    font-size: 14px;
+    color: #666;
+}
+.stars .fas {
+      color: black;
+   }
+  </style>
 </head>
-<body>
-<div class="navbar">
-    <ul>
-    <div class="navbar">
-<ul>
-    <?php include 'nav.php'; ?>
-</ul>
-</div>
-</div>
+  <body>
 
-<section class="about-section">
-    <div class="container-fluid h-100">
-        <div class="row justify-content-center align-items-center h-100">
-            <div class="col-lg-7">
-                <div class="card">
-                    <img src="img/logo2.jpg" class="card-img-top" alt="Pizza Hut">
-                    <div class="card-body">
-                        <h2 class="card-title">About Pizza Hut</h2>
-                        <p class="card-text">Pizza Hut is an American restaurant chain and international franchise which was founded in 1958 in Wichita, Kansas by Dan and Frank Carney. The company is known for its Italian-American cuisine menu, including pizza and pasta, as well as side dishes and desserts.</p>
-                    </div>
-                </div>
+  <?php include "nav.php"; ?>
+
+
+  <div class="container">
+        <h1 class="about-heading">ABOUT US</h1>
+        <div class="content">
+            <div class="image">
+                <img src="img/bdrop1.jpg" alt="">
+            </div>
+            <div class="text">
+            <p>Pizza Hut brings satisfaction to everybody's day with its signature pizzas, pastas, wings, and more.</p>
+<p>If you want more background check <a href="https://www.pizzahut.com/aboutus.html" target="_blank">Pizza Hut</a> to know more.</p>
+
+               
             </div>
         </div>
-    </div>
+    </div> 
+</body>
+            <div class="card-footer">
+               <small class="text-body-secondary" style="font-size: 18px;">Last updated 20 mins ago</small>
+            </div>
+         </div>
+      </div>
+   </div>
 </section>
 
-<footer class="bg-dark text-white text-center py-4">
-    <p>&copy; 2024 Pizza Hut. All rights reserved. For Educational Purposes Only!</p>
-</footer>
 
-<!-- Bootstrap JavaScript and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<?php include "../footer.php"; ?>  
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+$('.navbar-light .dmenu').hover(function () {
+        $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+    }, function () {
+        $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+    });
+});
 </body>
 </html>

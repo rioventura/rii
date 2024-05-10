@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Message</title>
+    <title>Delete Pet</title>
     <!-- SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -11,39 +11,37 @@
 <?php
 include 'conn.php';
 
-if (isset($_POST['submit'])) {
-
-    $full_name =  $_POST['full_name'];
-    $email =  $_POST['email'];
-    $phone_number = $_POST['phone_number'];
-    $subject =  $_POST['subject'];
-    $message =  $_POST['message'];
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
     
-    $sql = "INSERT INTO `message_tbl` (`full_name`, `email`, `phone_number`, `subject`, `message`) VALUES ('$full_name', '$email', '$phone_number', '$subject', '$message')";
+    $sql = "DELETE FROM `product_tbl` WHERE `id` = '$id'";
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Message submitted successfully.',
+                    text: 'Pet deleted successfully.',
                     icon: 'success',
-                    timer: 2000,
+                    timer: 1500,
                     timerProgressBar: true,
                     showConfirmButton: true,
                     confirmButtonText: 'OK'
                 }).then(function() {
-                    window.location.href = '../index.php';
+                    window.location.href = '../admin/product.php';
                 });
               </script>";
-    } else {
+    } else { 
         echo "<script>
                 Swal.fire({
                     title: 'Error!',
-                    text: 'An error occurred while submitting the message.',
+                    text: 'An error occurred while deleting the pet.',
                     icon: 'error',
-                    timer: 2000,
+                    timer: 1500,
                     timerProgressBar: true,
-                    showConfirmButton: false
+                    showConfirmButton: true,
+                    confirmButtonText: 'OK'
+                }).then(function() {
+                    window.location.href = '../admin/product.php';
                 });
               </script>";
     }

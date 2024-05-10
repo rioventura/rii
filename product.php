@@ -1,147 +1,110 @@
-<?php include "conn.php"; ?>
 <!DOCTYPE html>
-<html>
-
-<?php include 'cdn.php'; ?>
-
+<html lang="en">
+<head>
+  <title>Menu</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
+  <style>
+    .social-part .fa {
+        padding-right: 20px;
+    }
+    ul li a {
+        margin-right: 20px;
+    }
+    img {
+        height: 300px;
+    }
+    body {
+        font-family: Arial;
+    }
+    body {
+      background-color: #eee;
+    }
+    .add {
+        border-radius: 20px;
+    }
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        transition: all 1s;
+        cursor: pointer;
+    }
+   
+    /* Custom CSS for the card */
+    .card .card-body .title {
+        font-weight: bold;
+    }
+    .card .card-body .text-primary {
+        color: blue; /* Change color as desired */
+    }
+  </style>
+</head>
 <body>
 
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <?php include 'side.php'; ?>
-
-        <!-- Page Content  -->
-        <div id="content">
-            <?php include 'nav.php'; ?>
-
-            <div class="container ">
-                <div class="row  mb-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                       Add Products
-                    </button>
+<?php include "nav.php"; ?>
+<br>
+<div class="">
+    <div class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    
                 </div>
-                <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $sql = "SELECT p.`id`, p.`image`,p.`product_name`, p.`category`, c.`category` AS `category_name`, p.`price`, p.`quantity`, p.`status`
-            FROM `product_tbl` AS p
-            JOIN `category_tbl` AS c ON p.`category` = c.`id`
-            ;
-            ";
-            $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                 ?>
-            <tr>
-                <td><img src="../config/uploads/<?php echo $row['image']; ?>" alt="" style="height:120px;width:120px;"></td>
-                <td><?php echo $row['product_name']; ?></td>
-                <td><?php echo $row['category_name']; ?></td>
-                <td><?php echo $row['price']; ?></td>
-                <td><?php echo $row['quantity']; ?></td>
+            </div>
+            <div class="row">
+                <?php include "../config/conn.php"; 
+                $category = $_GET["cetegory"];
+                $sql = "SELECT p.`id`, p.`image`, p.`product_name`, c.`category` AS `category_name`, p.`price`, p.`quantity`, p.`status` 
+                        FROM `product_tbl` AS p 
+                        JOIN `category_tbl` AS c ON p.`category` = c.`id` 
+                        WHERE p.`category` = $category";
+                $result = mysqli_query($conn, $sql);
 
-                <td>
-                    <?php
-                    // Check if status is 1
-                    if ($row['status'] == "1") {
-                        echo "<span class='badge bg-success'>Available</span>";
-                    } else {
-                        echo "<span class='badge bg-danger'>Not Available</span>";
+                if(mysqli_num_rows($result) > 0){
+                    while($row = mysqli_fetch_assoc($result)){
+                ?>
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="card mb-4">
+                            <img src="../config/uploads/<?php echo $row['image']; ?>" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <div class="title">Menu Name: <span class="text-primary"><?php echo $row['product_name'];?></span></div>
+                                <div class="title">Category: <span class="text-primary"><?php echo $row['category_name'];?></span></div>
+                                <div class="text-primary"><span class="text-dark">₱ </span><span class="text-primary"><?php echo $row['price'];?></span></div>
+                                <div class="text-primary"><span class="text-dark">Available :</span><span class="text-primary"><?php echo $row['quantity'];?></span></div>
+                                <div class="text-primary">
+                                    <span class="text-dark">Status now: </span>
+                                    <?php
+                                        if ($row['status'] == 1) {
+                                            echo "<span class='text-primary'>available</span>";
+                                        } else {
+                                            echo "<span class='text-primary'>not available</span>";
+                                        }
+                                    ?>
+                                </div>
+                                <form action="../config/add-cart.php" method="POST">
+                                    <input type="hidden" value="<?php echo $category; ?>" name="category">
+                                    <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                                    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                                    <a href="buy.php?id=<?php echo $row['id']; ?>" class="btn btn-primary w-100">Buy now</a>
+                                    <button type="submit" class="btn btn-tomato w-100 mt-2">Add cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
                     }
-                    ?>
-                </td>
-
-
-                
-                <td>
-                    <a href="edit-product.php?id=<?php echo $row["id"];?>"><button type="button" class="btn btn-success" >Edit</button></a>
-                    <a href="../config/delete-product.php?id=<?php echo $row["id"];?>"><button type="button" class="btn btn-danger mt-2">Delete</button></a>
-                 </td>
-            </tr>
-            <?php }} ?>
-            
-       
-        </tbody>
-      
-    </table>
-            </div>
-
-
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Medicine</h1>
-                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <form action="../config/add-product.php" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image:</label>
-                        <input required type="file" accept="images" class="form-control" id="image" name="image">
-                    </div>
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Makeup's Name:</label>
-                        <input required type="text" class="form-control" id="name" name="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Category:</label>
-                        <select required class="form-control" id="category" name="category">
-                            <option disabled selected>&larr; Select Category &rarr;</option>
-                           <?php 
-                           $sql = "SELECT * FROM `category_tbl`";
-                           $result = mysqli_query($conn, $sql);
-                           while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                            <option value="<?php echo $row['id'];?>"><?php echo $row['category'];?></option>
-                            <?php }?>
-                           
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price:</label>
-                        <input required type="text" class="form-control" id="price" name="price">
-                    </div>
-                    <div class="mb-3">
-                        <label for="quantity" class="form-label">Quantity:</label>
-                        <input required type="number" class="form-control" id="quantity" name="quantity">
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status:</label>
-                        <select required class="form-control" id="status" name="status">
-                            <option disabled selected>&larr; Select Status &rarr;</option>
-                            <option value="1">Available</option>
-                            <option value="2">Not Available</option>
-                        </select> 
-                   </div>
-                   
-                    <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-                    </div>
-                </form>
+                }
+                ?>
             </div>
         </div>
     </div>
 </div>
 
-
-    <?php include 'footer.php'; ?>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
-
 </html>
